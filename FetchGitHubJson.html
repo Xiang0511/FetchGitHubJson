@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+// contents 是 GitHub API 中的一個端點（endpoint）。這個端點用於獲取特定存儲庫中的文件內容。在這個例子中，我
+//們正在使用這個端點來獲取 data.json 文件的內容。在 GitHub API 中，/repos/{owner}/{repo}/contents/{path} 
+//是用於獲取存儲庫中特定文件內容的端點。其中 {owner} 是存儲庫的擁有者，{repo} 是存儲庫的名稱，{path} 是文件的路徑。
+//所以在這個例子中，我們使用 /repos/Xiang0511/Test-Fetch-GitHub/contents/data.json 來指定 data.json 文件的路徑。
+//這個路徑將用於向 GitHub API 發送請求，以獲取該文件的內容。
+
+    fetch('https://api.github.com/repos/Xiang0511/Test-Fetch-GitHub/contents/data.json')
+        .then(response => response.json())
+        .then(data => {
+            if (data.content) {
+                try {
+                    const content = atob(data.content);
+                    console.log(JSON.parse(content));
+                } catch (e) {
+                    console.error('Failed to decode content:', e);
+                }
+            } else {
+                console.error('No content found in the response');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+</script>
+</html>
